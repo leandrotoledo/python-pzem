@@ -7,6 +7,7 @@ from datetime import datetime
 class PZEM_016(minimalmodbus.Instrument):
     def __init__(self, serial_port, slave_addr=1):
         minimalmodbus.Instrument.__init__(self, serial_port, slave_addr)
+
         self.serial.baudrate = 9600
         self.serial.parity = minimalmodbus.serial.PARITY_NONE
         self.serial.timeout = 0.1
@@ -14,25 +15,43 @@ class PZEM_016(minimalmodbus.Instrument):
         self.close_port_after_each_call = True
 
         self.registers = {
-            "voltage": {
-                "address": (0, 1, 4),  # 0.1V
+            "voltage": {  # 0.1V
+                "address": (0, 1, 4),
             },
-            "current": {"address": (1, 2, 4), "multiplier": 0.1},  # 0.001A
-            "power": {"address": (3, 2, 4), "multiplier": 10},  # 0.1W
-            "energy": {"address": (5, 2, 4), "multiplier": 10},  # 1Wh
-            "frequency": {
-                "address": (7, 1, 4),  # 0.1Hz
+            "current": {  # 0.001A
+                "address": (1, 2, 4),
+                "multiplier": 0.1,
             },
-            "power_factor": {"address": (8, 1, 4), "multiplier": 0.1},  # 0.01
-            "alarm_status": {
-                "address": (9, 0, 4),  # 0xFFF for alarm
+            "power": {  # 0.1W
+                "address": (3, 2, 4),
+                "multiplier": 10,
+            },
+            "energy": {  # 1Wh
+                "address": (5, 2, 4),
+                "multiplier": 10,
+            },
+            "frequency": {  # 0.1Hz
+                "address": (7, 1, 4),
+            },
+            "power_factor": {  # 0.01
+                "address": (8, 1, 4),
+                "multiplier": 0.1,
+            },
+            "alarm_status": {  # 0xFFF for alarm
+                "address": (9, 0, 4),
             },
             "alarm_threshold": {
-                "address": (1, 0, 3),  # 1W
+                "address": (1, 0, 3),
             },
-            "set_alarm_threshold": {"address": (1, None, 0, 6)},
-            "set_slave_address": {"address": (2, None, 0, 6)},
-            "reset_energy": {"address": (66, "")},
+            "set_alarm_threshold": {
+                "address": (1, None, 0, 6),
+            },
+            "set_slave_address": {
+                "address": (2, None, 0, 6),
+            },
+            "reset_energy": {
+                "address": (66, ""),
+            },
         }
 
     @property
@@ -42,22 +61,28 @@ class PZEM_016(minimalmodbus.Instrument):
     @property
     def current(self) -> float:
         value = self.read_register(*self.registers["current"]["address"])
+
         if value:
-            return round(value * self.registers["current"]["multiplier"], 3)
+            return round(value * self.registers["current"]["multiplier"], 2)
+
         return value
 
     @property
     def power(self) -> float:
         value = self.read_register(*self.registers["power"]["address"])
+
         if value:
             return round(value * self.registers["power"]["multiplier"], 1)
+
         return value
 
     @property
     def energy(self) -> int:
         value = self.read_register(*self.registers["energy"]["address"])
+
         if value:
             return round(value * self.registers["energy"]["multiplier"], 1)
+
         return value
 
     @property
@@ -67,15 +92,19 @@ class PZEM_016(minimalmodbus.Instrument):
     @property
     def power_factor(self) -> float:
         value = self.read_register(*self.registers["power_factor"]["address"])
+
         if value:
             return round(value * self.registers["power_factor"]["multiplier"], 1)
+
         return value
 
     @property
     def has_alarm(self) -> bool:
         value = self.read_register(*self.registers["alarm_status"]["address"])
+
         if value:
             return True
+
         return False
 
     @property
@@ -88,6 +117,7 @@ class PZEM_016(minimalmodbus.Instrument):
             args[1] = watts
 
             self.write_register(*args)
+
             return True
         except Exception:
             logging.exception("Failed to set alarm threshold.")
@@ -100,6 +130,7 @@ class PZEM_016(minimalmodbus.Instrument):
             args[1] = slave_address
 
             self.write_register(*args)
+
             return True
         except Exception:
             logging.exception("Failed to set slave address.")
@@ -109,6 +140,7 @@ class PZEM_016(minimalmodbus.Instrument):
     def reset_energy(self) -> bool:
         try:
             self._performCommand(*self.registers["reset_energy"]["address"])
+
             return True
         except Exception:
             logging.exception("Failed to reset energy counters.")
@@ -117,7 +149,9 @@ class PZEM_016(minimalmodbus.Instrument):
 
     def report(self, delay=5) -> None:
         print(
-            "Timestamp \t\t| V \t| A \t| W \t| Wh \t| Hz \t| PF \t| Alarm Status \t| Alarm Threshold"
+            "Timestamp \t\t| "
+            + "V \t| A \t| W \t| Wh \t| Hz \t| PF \t| "
+            + "Alarm Status \t| Alarm Threshold (W)"
         )
         while True:
             print(
