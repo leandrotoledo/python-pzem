@@ -116,17 +116,21 @@ class PZEM(minimalmodbus.Instrument):
         return False
 
     def report(self, delay=5) -> None:
-        print("Timestamp \t\t| V \t| A \t| W \t| Wh \t| Hz \t| PF \t| Alarm Status \t| Alarm Threshold")
+        print(
+            "Timestamp \t\t| V \t| A \t| W \t| Wh \t| Hz \t| PF \t| Alarm Status \t| Alarm Threshold"
+        )
         while True:
-            print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\t| "
-                  + f"{self.voltage}\t| "
-                  + f"{self.current}\t| "
-                  + f"{self.power}\t| "
-                  + f"{self.energy}\t| "
-                  + f"{self.frequency}\t| "
-                  + f"{self.power_factor}\t| "
-                  + f"{self.has_alarm}\t\t| "
-                  + f"{self.alarm_threshold}")
+            print(
+                f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\t| "
+                + f"{self.voltage}\t| "
+                + f"{self.current}\t| "
+                + f"{self.power}\t| "
+                + f"{self.energy}\t| "
+                + f"{self.frequency}\t| "
+                + f"{self.power_factor}\t| "
+                + f"{self.has_alarm}\t\t| "
+                + f"{self.alarm_threshold}"
+            )
             time.sleep(delay)
 
     def read(self) -> dict:
@@ -138,9 +142,9 @@ class PZEM(minimalmodbus.Instrument):
             "frequency": self.frequency,
             "power_factor": self.power_factor,
             "alarm_status": self.has_alarm,
-            "alarm_threshold": self.alarm_threshold
+            "alarm_threshold": self.alarm_threshold,
         }
 
 
-#pz = PZEM("/dev/ttyUSB0")
-#pz.report()
+# pz = PZEM("/dev/ttyUSB0")
+# pz.report()
