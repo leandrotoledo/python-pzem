@@ -63,7 +63,7 @@ class PZEM_016(minimalmodbus.Instrument):
         value = self.read_register(*self.registers["current"]["address"])
 
         if value:
-            return round(value * self.registers["current"]["multiplier"], 3)
+            return round(value * self.registers["current"]["multiplier"], 1)
 
         return value
 
