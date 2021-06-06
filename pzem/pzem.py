@@ -180,5 +180,5 @@ class PZEM_016(minimalmodbus.Instrument):
         }
 
 
-# pz = PZEM_016("/dev/ttyUSB0")
-# pz.report()
+class PZEM_014(PZEM_016):
+    pass
