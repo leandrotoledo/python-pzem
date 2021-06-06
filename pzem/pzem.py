@@ -1,7 +1,6 @@
 import minimalmodbus
 import logging
 import time
-from datetime import datetime
 
 
 class PZEM_016(minimalmodbus.Instrument):
@@ -155,7 +154,7 @@ class PZEM_016(minimalmodbus.Instrument):
         )
         while True:
             print(
-                f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\t| "
+                f"{int(time.time())}\t| "
                 + f"{self.voltage}\t| "
                 + f"{self.current}\t\t| "
                 + f"{self.power}\t\t| "
@@ -169,6 +168,7 @@ class PZEM_016(minimalmodbus.Instrument):
 
     def read(self) -> dict:
         return {
+            "timestamp": int(time.time()),
             "voltage": self.voltage,
             "current": self.current,
             "power": self.power,

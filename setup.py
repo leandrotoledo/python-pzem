@@ -1,11 +1,11 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
     name="python-pzem",
-    version="0.1.1",
+    version="0.1.3",
     author="Leandro Muto, Leandro Toledo",
     author_email="leandro.muto@gmail.com, leandrotoledodesouza@gmail.com",
     description="Python interface for PZEM-014 and PZEM-016 Energy Meters",
@@ -24,8 +24,7 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     license="LGPLv3",
-    package_dir={"": "pzem"},
-    packages=find_packages(where="pzem"),
+    packages=["pzem"],
     install_requires="minimalmodbus",
     python_requires=">=3.6",
 )
