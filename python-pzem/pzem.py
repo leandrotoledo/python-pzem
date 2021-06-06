@@ -150,14 +150,14 @@ class PZEM_016(minimalmodbus.Instrument):
     def report(self, delay=5) -> None:
         print(
             "Timestamp \t\t| "
-            + "V \t| A \t| W \t\t| Wh \t\t| Hz \t| PF \t| "
+            + "V \t| A \t\t| W \t\t| Wh \t\t| Hz \t| PF \t| "
             + "Alarm Status \t| Alarm Threshold (W)"
         )
         while True:
             print(
                 f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\t| "
                 + f"{self.voltage}\t| "
-                + f"{self.current}\t| "
+                + f"{self.current}\t\t| "
                 + f"{self.power}\t\t| "
                 + f"{self.energy}\t\t| "
                 + f"{self.frequency}\t| "
