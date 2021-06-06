@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 
 
-class PZEM(minimalmodbus.Instrument):
+class PZEM_016(minimalmodbus.Instrument):
     def __init__(self, serial_port, slave_addr=1):
         minimalmodbus.Instrument.__init__(self, serial_port, slave_addr)
         self.serial.baudrate = 9600
@@ -101,7 +101,7 @@ class PZEM(minimalmodbus.Instrument):
 
             self.write_register(*args)
             return True
-        except Exception as e:
+        except Exception:
             logging.exception("Failed to set slave address.")
 
         return False
@@ -110,7 +110,7 @@ class PZEM(minimalmodbus.Instrument):
         try:
             self._performCommand(*self.registers["reset_energy"]["address"])
             return True
-        except Exception as e:
+        except Exception:
             logging.exception("Failed to reset energy counters.")
 
         return False
