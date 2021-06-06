@@ -63,7 +63,7 @@ class PZEM_016(minimalmodbus.Instrument):
         value = self.read_register(*self.registers["current"]["address"])
 
         if value:
-            return round(value * self.registers["current"]["multiplier"], 2)
+            return round(value * self.registers["current"]["multiplier"], 3)
 
         return value
 
@@ -150,7 +150,7 @@ class PZEM_016(minimalmodbus.Instrument):
     def report(self, delay=5) -> None:
         print(
             "Timestamp \t\t| "
-            + "V \t| A \t| W \t| Wh \t| Hz \t| PF \t| "
+            + "V \t| A \t| W \t\t| Wh \t\t| Hz \t| PF \t| "
             + "Alarm Status \t| Alarm Threshold (W)"
         )
         while True:
@@ -158,8 +158,8 @@ class PZEM_016(minimalmodbus.Instrument):
                 f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\t| "
                 + f"{self.voltage}\t| "
                 + f"{self.current}\t| "
-                + f"{self.power}\t| "
-                + f"{self.energy}\t| "
+                + f"{self.power}\t\t| "
+                + f"{self.energy}\t\t| "
                 + f"{self.frequency}\t| "
                 + f"{self.power_factor}\t| "
                 + f"{self.has_alarm}\t\t| "
@@ -180,5 +180,5 @@ class PZEM_016(minimalmodbus.Instrument):
         }
 
 
-# pz = PZEM("/dev/ttyUSB0")
+# pz = PZEM_016("/dev/ttyUSB0")
 # pz.report()
