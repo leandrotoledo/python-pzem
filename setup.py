@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="python-pzem",
-    version="0.1.3",
+    version="0.1.4",
     author="Leandro Muto, Leandro Toledo",
     author_email="leandro.muto@gmail.com, leandrotoledodesouza@gmail.com",
     description="Python interface for PZEM-014 and PZEM-016 Energy Meters",

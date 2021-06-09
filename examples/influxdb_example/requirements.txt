@@ -1,0 +1,4 @@
+python-pzem
+influxdb-client
+python-decouple
+influxdb-client

@@ -5,8 +5,8 @@ Requirements:
 * A cluster created on Atlas MongoDB (https://cloud.mongodb.com/)
 * Updated .env file containing MONGODB_URL
 * PZEM Instrument connected via USB
-* The following python packages:
-  $ pip install python-pzem motor dnspython python-decouple
+* The following dependencies:
+  $ pip install -r examples/mongodb_example/requirements.txt
 
 """
 
