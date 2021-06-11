@@ -26,6 +26,9 @@ def main() -> None:
 
         logging.info(f"{reading}")
 
+        # Limitation on InfluxDB to handle boolean type
+        alarm_status = 1 if reading["alarm_status"] else 0
+
         point = (
             Point("meter_reading")
             .tag("host", "PZEM Meter")
@@ -36,7 +39,7 @@ def main() -> None:
             .field("energy", reading["energy"])
             .field("frequency", reading["frequency"])
             .field("power_factor", reading["power_factor"])
-            .field("alarm_status", reading["alarm_status"])
+            .field("alarm_status", alarm_status)
             .field("alarm_threshold", reading["alarm_threshold"])
             .time(timestamp, WritePrecision.NS)
         )
