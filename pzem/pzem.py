@@ -27,7 +27,7 @@ class PZEM_016(minimalmodbus.Instrument):
             },
             "energy": {  # 1Wh
                 "address": (5, 2, 4),
-                "multiplier": 10,
+                "multiplier": 1,
             },
             "frequency": {  # 0.1Hz
                 "address": (7, 1, 4),
