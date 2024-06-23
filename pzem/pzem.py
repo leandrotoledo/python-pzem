@@ -49,7 +49,7 @@ class PZEM_016(minimalmodbus.Instrument):
                 "address": (2, None, 0, 6),
             },
             "reset_energy": {
-                "address": (66, ""),
+                "address": (66, b""),
             },
         }
 
@@ -138,7 +138,7 @@ class PZEM_016(minimalmodbus.Instrument):
 
     def reset_energy(self) -> bool:
         try:
-            self._performCommand(*self.registers["reset_energy"]["address"])
+            self._perform_command(*self.registers["reset_energy"]["address"])
 
             return True
         except Exception:
